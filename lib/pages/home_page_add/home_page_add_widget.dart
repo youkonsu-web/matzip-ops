@@ -38,15 +38,40 @@ class _HomePageAddWidgetState extends State<HomePageAddWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.candidatesQuery = await queryPlaceCandidatesRecordOnce(
-        queryBuilder: (placeCandidatesRecord) => placeCandidatesRecord.where(
-          'status',
-          isEqualTo: 'pending',
-        ),
-      );
-      _model.candidateDocLists =
-          _model.candidatesQuery!.toList().cast<PlaceCandidatesRecord>();
-      safeSetState(() {});
+      Function() _navigate = () {};
+      _model.adminOutput = await actions.isAdminUser();
+      if (_model.adminOutput!) {
+        _model.candidatesQuery = await queryPlaceCandidatesRecordOnce(
+          queryBuilder: (placeCandidatesRecord) => placeCandidatesRecord.where(
+            'status',
+            isEqualTo: 'pending',
+          ),
+        );
+        _model.candidateDocLists =
+            _model.candidatesQuery!.toList().cast<PlaceCandidatesRecord>();
+        safeSetState(() {});
+      } else {
+        GoRouter.of(context).prepareAuthEvent();
+        await authManager.signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
+        _navigate = () =>
+            context.goNamedAuth(EntryPageWidget.routeName, context.mounted);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '관리자만 접근 가능합니다.',
+              style: TextStyle(
+                color: FlutterFlowTheme.of(context).primaryText,
+              ),
+            ),
+            duration: Duration(milliseconds: 4000),
+            backgroundColor: FlutterFlowTheme.of(context).secondary,
+          ),
+        );
+      }
+
+      _navigate();
     });
 
     _model.tabBarController = TabController(

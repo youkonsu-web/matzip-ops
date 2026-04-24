@@ -55,6 +55,8 @@ class HomePageAddModel extends FlutterFlowModel<HomePageAddWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - isAdminUser] action in HomePage-add widget.
+  bool? adminOutput;
   // Stores action output result for [Firestore Query - Query a collection] action in HomePage-add widget.
   List<PlaceCandidatesRecord>? candidatesQuery;
   // State field(s) for TabBar widget.
