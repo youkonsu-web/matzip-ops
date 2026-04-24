@@ -1,0 +1,65 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:ui';
+import 'home_page_editor_widget.dart' show HomePageEditorWidget;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+class HomePageEditorModel extends FlutterFlowModel<HomePageEditorWidget> {
+  ///  Local state fields for this page.
+
+  List<PlaceCandidatesRecord> candidateDocLists = [];
+  void addToCandidateDocLists(PlaceCandidatesRecord item) =>
+      candidateDocLists.add(item);
+  void removeFromCandidateDocLists(PlaceCandidatesRecord item) =>
+      candidateDocLists.remove(item);
+  void removeAtIndexFromCandidateDocLists(int index) =>
+      candidateDocLists.removeAt(index);
+  void insertAtIndexInCandidateDocLists(
+          int index, PlaceCandidatesRecord item) =>
+      candidateDocLists.insert(index, item);
+  void updateCandidateDocListsAtIndex(
+          int index, Function(PlaceCandidatesRecord) updateFn) =>
+      candidateDocLists[index] = updateFn(candidateDocLists[index]);
+
+  String? restName;
+
+  String? pRoadAddress;
+
+  String? pJibunAddress;
+
+  DateTime? pSubmittedTime;
+
+  String? pCategory;
+
+  String? pPhone;
+
+  LatLng? pLocation;
+
+  String? pSubmmitedBy;
+
+  DocumentReference? selectedCandidateRef;
+
+  PlaceCandidatesRecord? selectedCandidateData;
+
+  String activeTab = 'new';
+
+  ///  State fields for stateful widgets in this page.
+
+  // Stores action output result for [Firestore Query - Query a collection] action in HomePage-editor widget.
+  List<PlaceCandidatesRecord>? candidatesQuery;
+
+  @override
+  void initState(BuildContext context) {}
+
+  @override
+  void dispose() {}
+}

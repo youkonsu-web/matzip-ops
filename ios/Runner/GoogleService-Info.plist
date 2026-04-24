@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>513670228883-pcr5ir8auac40jraan65jtj8h75n375m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.513670228883-pcr5ir8auac40jraan65jtj8h75n375m</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>513670228883-0jtmiciq0ak1ecjfm6g7h8qd0u9aal8v.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBkXpb4YiHAbapANabwRyi-tAZyPhtD-r0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>513670228883</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mycompany.matzipops</string>
+	<key>PROJECT_ID</key>
+	<string>matzip250424-i119eo</string>
+	<key>STORAGE_BUCKET</key>
+	<string>matzip250424-i119eo.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:513670228883:ios:2fe1f803ae669184f15666</string>
+</dict>
+</plist>
