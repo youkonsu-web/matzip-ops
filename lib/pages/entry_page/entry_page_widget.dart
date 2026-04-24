@@ -88,6 +88,10 @@ class _EntryPageWidgetState extends State<EntryPageWidget> {
                         context.goNamedAuth(
                             HomePageAddWidget.routeName, context.mounted);
                       } else {
+                        GoRouter.of(context).prepareAuthEvent();
+                        await authManager.signOut();
+                        GoRouter.of(context).clearRedirectLocation();
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
