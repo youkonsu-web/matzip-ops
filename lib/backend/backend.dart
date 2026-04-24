@@ -8,6 +8,7 @@ import 'schema/util/firestore_util.dart';
 import 'schema/place_candidates_record.dart';
 import 'schema/users_record.dart';
 import 'schema/restaurants_record.dart';
+import 'schema/admins_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -19,6 +20,7 @@ export 'schema/util/schema_util.dart';
 export 'schema/place_candidates_record.dart';
 export 'schema/users_record.dart';
 export 'schema/restaurants_record.dart';
+export 'schema/admins_record.dart';
 
 /// Functions to query PlaceCandidatesRecords (as a Stream and as a Future).
 Future<int> queryPlaceCandidatesRecordCount({
@@ -126,6 +128,43 @@ Future<List<RestaurantsRecord>> queryRestaurantsRecordOnce({
     queryCollectionOnce(
       RestaurantsRecord.collection,
       RestaurantsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query AdminsRecords (as a Stream and as a Future).
+Future<int> queryAdminsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      AdminsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<AdminsRecord>> queryAdminsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      AdminsRecord.collection,
+      AdminsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<AdminsRecord>> queryAdminsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      AdminsRecord.collection,
+      AdminsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
@@ -264,34 +303,4 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
   final dataStream = docSnapshotStream?.map(getDocs);
   final nextPageToken = docSnapshot.docs.isEmpty ? null : docSnapshot.docs.last;
   return FFFirestorePage(data, dataStream, nextPageToken);
-}
-
-// Creates a Firestore document representing the logged in user if it doesn't yet exist
-Future maybeCreateUser(User user) async {
-  final userRecord = UsersRecord.collection.doc(user.uid);
-  final userExists = await userRecord.get().then((u) => u.exists);
-  if (userExists) {
-    currentUserDocument = await UsersRecord.getDocumentOnce(userRecord);
-    return;
-  }
-
-  final userData = createUsersRecordData(
-    email: user.email ??
-        FirebaseAuth.instance.currentUser?.email ??
-        user.providerData.firstOrNull?.email,
-    displayName:
-        user.displayName ?? FirebaseAuth.instance.currentUser?.displayName,
-    photoUrl: user.photoURL,
-    uid: user.uid,
-    phoneNumber: user.phoneNumber,
-    createdTime: getCurrentTimestamp,
-  );
-
-  await userRecord.set(userData);
-  currentUserDocument = UsersRecord.getDocumentFromData(userData, userRecord);
-}
-
-Future updateUserDocument({String? email}) async {
-  await currentUserDocument?.reference
-      .update(createUsersRecordData(email: email));
 }
