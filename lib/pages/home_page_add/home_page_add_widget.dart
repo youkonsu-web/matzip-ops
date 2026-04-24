@@ -38,7 +38,6 @@ class _HomePageAddWidgetState extends State<HomePageAddWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      Function() _navigate = () {};
       _model.adminOutput = await actions.isAdminUser();
       if (_model.adminOutput!) {
         _model.candidatesQuery = await queryPlaceCandidatesRecordOnce(
@@ -55,8 +54,8 @@ class _HomePageAddWidgetState extends State<HomePageAddWidget>
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () =>
-            context.goNamedAuth(EntryPageWidget.routeName, context.mounted);
+        context.goNamedAuth(EntryPageWidget.routeName, context.mounted);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -70,8 +69,6 @@ class _HomePageAddWidgetState extends State<HomePageAddWidget>
           ),
         );
       }
-
-      _navigate();
     });
 
     _model.tabBarController = TabController(
