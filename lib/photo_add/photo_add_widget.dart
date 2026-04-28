@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -7,6 +8,8 @@ import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -454,25 +457,47 @@ class _PhotoAddWidgetState extends State<PhotoAddWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 50.0, 0.0, 0.0),
-                            child: Container(
-                              width: 208.0,
-                              height: 54.0,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFD31515),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Text(
-                                  '수정 완료',
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'pretendard',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        letterSpacing: 0.0,
-                                      ),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await widget!.restaurantsDoc!.reference.update({
+                                  ...createRestaurantsRecordData(
+                                    dbMPVUpdated: true,
+                                    latestUpdateBy: currentUserUid,
+                                  ),
+                                  ...mapToFirestore(
+                                    {
+                                      'main_image_cf_ids': _model.pCfImageIds,
+                                    },
+                                  ),
+                                });
+
+                                context
+                                    .pushNamed(HomePagePhotoWidget.routeName);
+                              },
+                              child: Container(
+                                width: 208.0,
+                                height: 54.0,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFD31515),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: Text(
+                                    '수정 완료',
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'pretendard',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
                                 ),
                               ),
                             ),

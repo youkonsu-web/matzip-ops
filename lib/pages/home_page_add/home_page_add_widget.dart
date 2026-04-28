@@ -50,12 +50,6 @@ class _HomePageAddWidgetState extends State<HomePageAddWidget>
             _model.candidatesQuery!.toList().cast<PlaceCandidatesRecord>();
         safeSetState(() {});
       } else {
-        GoRouter.of(context).prepareAuthEvent();
-        await authManager.signOut();
-        GoRouter.of(context).clearRedirectLocation();
-
-        context.goNamedAuth(EntryPageWidget.routeName, context.mounted);
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -68,6 +62,11 @@ class _HomePageAddWidgetState extends State<HomePageAddWidget>
             backgroundColor: FlutterFlowTheme.of(context).secondary,
           ),
         );
+        GoRouter.of(context).prepareAuthEvent();
+        await authManager.signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
+        context.goNamedAuth(EntryPageWidget.routeName, context.mounted);
       }
     });
 
